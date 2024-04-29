@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyeonggi Bus Status</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <header>
+        <img src="img/logo.png" alt="logo" class="mainlogo">
+        <nav>
+            <ul>
+                <li><a href="#">새 소식</a></li>
+                <li><a href="#">건의 사항</a></li>
+                <li><a href="#">소개</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Search bus stop...">
+            <button id="search-button">Search</button>
+        </div>
+
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+
+        <div class="bus-stops-container">
+            <h2>Bus Stops</h2>
+            <ul id="bus-stops-list"></ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Seoul Bus Route Information. All rights reserved.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
