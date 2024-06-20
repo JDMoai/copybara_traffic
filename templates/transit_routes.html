@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gyeonggi Bus Status</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <a href="/static/main.html"><img src="/static/img/logo2.png" alt="logo" class="mainlogo"></a>
+        <nav>
+            <ul>
+                <li><a href="/static/main.html">버스검색</a></li>
+                <li><a href="/authorized_routes">노선현황</a></li>
+                <li><a href="/news">공지사항</a></li>
+                <li><a href="/transfertime">교통분석</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="route-main">
+        <div class="routemain-body">
+            <div class="news-comment">
+                <h1>노선현황</h1>
+            </div>
+
+            <ul>
+                <li class="routes-li-color"><a href="/authorized_routes">인허가 노선</a></li>
+                <li class="transit_routes-li"><a href="/transit_routes">경유 노선</a></li>
+            </ul>
+            <table>
+                <tr>
+                    <th>노선번호</th>
+                    <th>기점</th>
+                    <th>종점</th>
+                    <th colspan="4">상행</th>                    
+                    <th colspan="4">하행</th>                    
+                    <th>출퇴근배차</th>
+                    <th>평일배차</th>
+                    <th>주말배차</th>
+                    <th>운수사명</th>
+                </tr>
+                {% for row in data %}
+                <tr>
+                    <td>{{ row[0] }}</td> <!-- 노선번호 -->
+                    <td>{{ row[1] }}</td> <!-- 기점 -->
+                    <td>{{ row[2] }}</td> <!-- 종점 -->
+                    <td colspan="4">주중 : {{ row[3] }} ~ {{ row[4] }}<br>주말 : {{ row[5] }} ~ {{ row[6] }}</td><!--상행-->                 
+                    <td colspan="4">주중 : {{ row[7] }} ~ {{ row[8] }}<br>주말 : {{ row[9] }} ~ {{ row[10] }}</td><!--하행-->            
+                    <td>{{ row[11] }}분</td> <!-- 출퇴근배차 -->
+                    <td>{{ row[12] }}분</td> <!-- 평일배차 -->
+                    <td>{{ row[13] }}분</td> <!-- 주말배차 -->
+                    <td>{{ row[14] }}</td> <!-- 운수사명 -->
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <div class=""> 
+            <div><img src="/static/img/안산시.png" alt=""></div>
+            <div>15335 경기도 안산시 단원구 화랑로 387(고잔동) <br> COPYRIGHT&copy; ANSAN BUS ROUTE INFORMATION</div>
+        </div>
+    </footer>
+</body>
+</html>

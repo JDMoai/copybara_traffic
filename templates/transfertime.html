@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gyeonggi Bus Status</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script> <!-- 추가된 부분 -->
+</head>
+<body>
+    <header>
+        <a href="/static/main.html"><img src="/static/img/logo2.png" alt="logo" class="mainlogo"></a>
+        <nav>
+            <ul>
+                <li><a href="/static/main.html">버스검색</a></li>
+                <li><a href="/authorized_routes">노선현황</a></li>
+                <li><a href="/news">공지사항</a></li>
+                <li><a href="/transfertime">교통분석</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="transfermain">
+        <div class="transfermain-body">
+            <div class="news-comment">
+                <h1>교통분석</h1>
+            </div>
+            
+            <div class="transferTimeChart-div">
+                <canvas class="transferTimeChart" id="transferTimeChart" width="1400" height="700"></canvas>
+            </div>
+            <div class="total_pages">
+                <span>총 463건</span>
+                <select onchange="location = this.value;">
+                    {% for p in range(1, total_pages + 1) %}
+                    <option value="?page={{ p }}" {% if p == page %}selected{% endif %}>{{ p }} / {{ total_pages }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="transferTimeTable-div">
+                <table id="transferTimeTable">
+                    <thead>
+                        <tr>
+                            <th>연도</th>
+                            <th>행정구역</th>
+                            <th>사용자구분</th>
+                            <th>일시구분</th>
+                            <th>정류소ID</th>
+                            <th>정류소번호</th>
+                            <th>정류소명</th>
+                            <th>환승시간(분)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 데이터가 여기에 삽입됩니다 -->
+                        {% for item in transfer_time_data %}
+                        <tr>
+                            <td>{{ item.year }}</td>
+                            <td>{{ item.region }}</td>
+                            <td>{{ item.userType }}</td>
+                            <td>{{ item.timeType }}</td>
+                            <td>{{ item.stopId }}</td>
+                            <td>{{ item.stopNumber }}</td>
+                            <td>{{ item.stopName }}</td>
+                            <td>{{ item.transferTime }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class=""> 
+            <div><img src="/static/img/안산시.png" alt=""></div>
+            <div>15335 경기도 안산시 단원구 화랑로 387(고잔동) <br> COPYRIGHT&copy; ANSAN BUS ROUTE INFORMATION</div>
+        </div>
+    </footer>
+
+    <script>
+        // 데이터를 배열에 저장
+        const transferTimeData = {{ transfer_time_data | tojson }};
+
+        // 차트를 생성
+        const ctx = document.getElementById('transferTimeChart').getContext('2d');
+        const transferTimeChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: transferTimeData.map(data => data.stopName),
+                datasets: [{
+                    label: '환승시간 (분)',
+                    data: transferTimeData.map(data => data.transferTime),
+                    borderColor: '#1e90ff',
+                    borderWidth: 1,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        align: 'end',
+                        anchor: 'end',
+                        formatter: function(value) {
+                            return value.toFixed(2); // 소수점 두 자리까지 표시
+                        }
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+    </script>
+</body>
+</html>

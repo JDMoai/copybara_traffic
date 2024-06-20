@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ notice[1] }} - Gyeonggi Bus Status</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <a href="/static/main.html"><img src="/static/img/logo2.png" alt="logo" class="mainlogo"></a>
+        <nav>
+            <ul>
+                <li><a href="/static/main.html">버스검색</a></li>
+                <li><a href="/authorized_routes">노선현황</a></li>
+                <li><a href="/news">공지사항</a></li>
+                <li><a href="/transfertime">교통분석</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="notice-main">
+        <div class="news-detail-container">         
+            <div class="down-bar"></div>  
+            <table class="news-detail-table">
+                <tr>
+                    <th>제목</th>
+                    <td class="news-title" colspan="3">{{ notice[1] }}</td>
+                </tr>
+                <tr>
+                    <th>등록일</th>
+                    <td>{{ notice[3] }}</td>
+                    <th>조회수</th>
+                    <td>{{ notice[4] }}</td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td colspan="3" class="news-content">{{ notice[2] | safe }}</td>
+                </tr>
+            </table>
+            <button class="list-button"><a href="/news">목록</a></button>
+        </div>
+    </main>
+
+    <footer>
+        <div class=""> 
+            <div><img src="/static/img/안산시.png" alt=""></div>
+            <div>15335 경기도 안산시 단원구 화랑로 387(고잔동) <br> COPYRIGHT&copy; ANSAN BUS ROUTE INFORMATION</div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gyeonggi Bus Status</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        /* 모달 창 스타일 추가 */
+        #route-info-modal {
+            position: absolute;
+            top: 36%;
+            right: 55%;
+            width: 300px;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            z-index: 1000;
+            display: none;
+        }
+        #route-info-modal h4 {
+            margin-top: 0;
+        }
+        #route-info-modal table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #route-info-modal table th, #route-info-modal table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        #route-info-modal table th {
+            background-color: #e2f0fe;
+        }
+        #route-info-modal .close-btn {
+            float: right;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/static/main.html"><img src="img/logo2.png" alt="logo" class="mainlogo"></a>
+        <nav>
+            <ul>
+                <li><a href="/static/main.html">버스검색</a></li>
+                <li><a href="/authorized_routes">노선현황</a></li>
+                <li><a href="/news">공지사항</a></li>
+                <li><a href="/transfertime">교통분석</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="map-body">
+            <div class="bus-info-text">안산 버스정보 조회</div>
+            <div class="search-box">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="노선번호, 정류소명, 정류소번호로 검색">
+                    <button id="search-button"><img src="/static/img/돋보기.png" alt=""></button>
+                </div>
+            </div>
+            <div class="bus-search-box">
+                검색결과 
+                <img class="arrow-down" src="img/arrow-down.png" alt="" />
+            </div>
+            
+            <div class="bus-stops-container">
+                <div class="tab-container">
+                    <div class="tab active" id="bus-stops-tab">
+                        <div class="tab-heading">정류소</div>
+                    </div>
+                    <div class="tab" id="bus-routes-tab">
+                        <div class="tab-heading">버스</div>
+                    </div>
+                </div>
+                <div id="bus-stops-content" class="tab-content active">
+                    <ul id="bus-stops-list"></ul>
+                </div>
+                <div id="bus-routes-content" class="tab-content">
+                    <ul id="bus-routes-list"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="map-container">
+            <div id="map" style="height: 1044px; width: 1909px;"></div>
+        </div>
+        <div id="route-info-modal">
+            <h4>노선 정보 <button class="close-btn" onclick="closeModalWindow()">X</button></h4>
+            <table>
+                <tr>
+                    <th>노선번호</th>
+                    <td id="routeName"></td>
+                </tr>
+                <tr>
+                    <th>노선유형</th>
+                    <td id="routeTypeName"></td>
+                </tr>
+                <tr>
+                    <th>기점</th>
+                    <td id="startStationName"></td>
+                </tr>
+                <tr>
+                    <th>종점</th>
+                    <td id="endStationName"></td>
+                </tr>
+                <tr>
+                    <th>운수업체</th>
+                    <td id="companyName"></td>
+                </tr>
+                <tr>
+                    <th>전화번호</th>
+                    <td id="companyTel"></td>
+                </tr>
+                <tr>
+                    <th>배차간격</th>
+                    <td id="interval"></td>
+                </tr>
+                <tr>
+                    <th>기점 시간</th>
+                    <td id="upFirstLastTime"></td>
+                </tr>
+                <tr>
+                    <th>종점 시간</th>
+                    <td id="downFirstLastTime"></td>
+                </tr>
+            </table>
+        </div>
+    </main>
+    
+    <footer>
+        <div class=""> 
+            <div><img src="/static/img/안산시.png" alt=""></div>
+            <div>15335 경기도 안산시 단원구 화랑로 387(고잔동) <br> COPYRIGHT&copy; ANSAN BUS ROUTE INFORMATION</div>
+        </div>
+    </footer>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=561a6fe4bdc7c75b1d404b10d9a3626f&libraries=services"></script>
+    <script src="/static/js/busStop.js"></script>
+    <script>
+        function closeModalWindow() {
+            document.getElementById('route-info-modal').style.display = 'none';
+        }
+
+        document.getElementById('bus-stops-tab').addEventListener('click', function() {
+            document.getElementById('bus-stops-tab').classList.add('active');
+            document.getElementById('bus-routes-tab').classList.remove('active');
+            document.getElementById('bus-stops-content').classList.add('active');
+            document.getElementById('bus-routes-content').classList.remove('active');
+        });
+
+        document.getElementById('bus-routes-tab').addEventListener('click', function() {
+            document.getElementById('bus-stops-tab').classList.remove('active');
+            document.getElementById('bus-routes-tab').classList.add('active');
+            document.getElementById('bus-stops-content').classList.remove('active');
+            document.getElementById('bus-routes-content').classList.add('active');
+        });
+    </script>
+</body>
+</html>

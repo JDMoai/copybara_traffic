@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gyeonggi Bus Status</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <a href="/static/main.html"><img src="/static/img/logo2.png" alt="logo" class="mainlogo"></a>
+        <nav>
+            <ul>
+                <li><a href="/static/main.html">버스검색</a></li>
+                <li><a href="/authorized_routes">노선현황</a></li>
+                <li><a href="/news">공지사항</a></li>
+                <li><a href="/transfertime">교통분석</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="newsmain-body">
+            <div class="news-comment">
+                <h1>공지사항</h1>
+            </div>
+            <div class="news-body">
+                <div class="news-body-b">공지사항 목록</div>
+                <table class="news-body-t">
+                    <colgroup>
+                        <col width="15%">
+                        <col>
+                        <col width="25%">
+                        <col width="15%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th scope="col" addr="번호">번호</th>
+                            <th scope="col" addr="제목">제목</th>
+                            <th scope="col" addr="등록일">등록일</th>
+                            <th scope="col" addr="조회수">조회수</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for board in boards %}
+                            <tr>
+                                <td>{{ board[0] }}</td>
+                                <td id="tbody-title">
+                                    <a href="/news/{{ board[0] }}">{{ board[1] }}</a>
+                                </td>
+                                <td>{{ board[2] }}</td>
+                                <td>{{ board[3] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+            </div>
+            <div class="pagination">
+                {% if page > 1 %}
+                    <a href="{{ url_for('news', page=page-1) }}">&laquo; Previous</a>
+                {% endif %}
+                {% for p in range(1, total_pages + 1) %}
+                    {% if p == page %}
+                        <strong>{{ p }}</strong>
+                    {% else %}
+                        <a href="{{ url_for('news', page=p) }}">{{ p }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% if page < total_pages %}
+                    <a href="{{ url_for('news', page=page+1) }}">Next &raquo;</a>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class=""> 
+            <div><img src="/static/img/안산시.png" alt=""></div>
+            <div>15335 경기도 안산시 단원구 화랑로 387(고잔동) <br> COPYRIGHT&copy; ANSAN BUS ROUTE INFORMATION</div>
+        </div>
+    </footer>
+</body>
+</html>
